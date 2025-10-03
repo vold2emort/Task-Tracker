@@ -67,8 +67,31 @@ def update_task(task_id: int, description: str = None, status: str = None):
             json.dump(tasks, file, indent=4)
         print(f"Task ID {task_id} updated successfully.")
 
+# Delete Task function
+def delete_task(task_id: int):
+    """"Delete a task by its ID"""
+    if not os.path.exists(FILEPATH):
+        print("No tasks file found.")
+        return
+    with open(FILEPATH, 'r') as file:
+        try:
+            tasks = json.load(file)
+        except (json.JSONDecodeError, FileNotFoundError):
+            print("No tasks found.")
+            return
+    task_to_delete = next((task for task in tasks if task["id"] == task_id), None)
+    if not task_to_delete:
+        print(f"Task with ID {task_id} not found.")
+        return
+    else:
+        tasks.remove(task_to_delete)
+        with open(FILEPATH, 'w') as file:
+            json.dump(tasks, file, indent=4)
+        print(f"Task ID {task_id} deleted successfully.")
 
-#main CLI loop
+
+
+# main CLI loop
 def main():
     print("Welcome to the Task Manager CLI")
     print("Type 'help' to see available commands. \n")
@@ -83,6 +106,7 @@ def main():
             print("Available commands:")
             print("  add \"task description\"   → Add a new task")
             print("update <id> \"new description\" \"new status\"   → Update a task")
+            print("  delete <id>              → Delete a task")
             print("  exit / quit              → Exit the program")
             continue
         if command.startswith("add "):
@@ -105,8 +129,14 @@ def main():
                 except (ValueError, IndexError):
                     print("⚠️ Usage: update <id> \"new description\" \"new status\"")
             continue
+        if command.startswith("delete "):
+            parts = shlex.split(command)
+            try:
+                task_id = int(parts[1])
+                delete_task(task_id)
+            except (ValueError, IndexError):
+                print("⚠️ Usage: delete <id>")
 
-        print(f"⚠️ Unknown command: {command}. Type 'help'.")
 
 if __name__ == "__main__":
     main()
