@@ -31,4 +31,4 @@ task-todo> list
 
 ```
 Demo
-![alt text](tasktodo_pic.png)
+![screenshot](tasktodo_pic.png)
