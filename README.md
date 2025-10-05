@@ -1,6 +1,6 @@
 Task Tracker (Python CLI)
 
-A simple command-line Task Tracker built in Python, inspired by the roadmap.sh project ideas
+A simple command-line Task Tracker built in Python, inspired by the roadmap.sh (https://roadmap.sh/projects/task-tracker) project ideas
 .
 
 This project lets you add, update, delete, and mark tasks directly from the terminal. Tasks are stored in a JSON file for persistence, making it lightweight and easy to use.
